@@ -1,0 +1,2 @@
+import red
+const store = 
