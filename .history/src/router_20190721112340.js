@@ -1,1 +1,0 @@
-import React,{Compo} from 'react';

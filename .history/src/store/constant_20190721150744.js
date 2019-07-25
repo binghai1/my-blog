@@ -1,1 +1,0 @@
-const SET_USER='setUser'

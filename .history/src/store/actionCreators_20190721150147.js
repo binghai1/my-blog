@@ -1,2 +1,0 @@
-import red
-const store = 
