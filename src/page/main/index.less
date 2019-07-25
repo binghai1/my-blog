@@ -1,0 +1,52 @@
+.main-container{
+    padding: 0 20px 20px 20px;
+    .ant-list-pagination{
+        margin-right: 260px;
+    }
+    .ant-list-items{
+        margin-right: 260px;
+        .ant-list-item{
+            padding:30px 20px 10px 20px;
+            border: 1px solid #ebedf0;
+            margin-bottom: 20px;
+            transition:  all  .2s linear;
+            &:hover{
+                background: #effbff;
+                box-shadow: 0 5px 25px rgba(0, 0, 0, .1)
+            }
+            .title{
+                font-size: 1.2em;
+                color: #394d69;
+                cursor: pointer;
+                font-weight: 700;
+                &:hover{
+                    color:#48b2ff
+                }
+            }
+            .time{
+                margin-left: 20px;
+                font-size: .5em;
+            }
+        }
+    }
+    .preview{
+        position: fixed;
+        width: 260px;
+        top: 104px;
+        right: 20px;
+        list-style-type: circle;
+        text-align: center;
+        padding: 0 20px;
+        li{
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            &:hover{
+                background-color: #f0f2f5;
+                a{
+                    color: #1890ff;
+                }
+            }
+        }
+    }
+}

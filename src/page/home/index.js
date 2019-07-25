@@ -9,7 +9,6 @@ const {  Footer } = Layout;
 class Home extends Component{
     constructor(){
         super()
-        console.log(this)
     }
     handleInput(value){
         console.log(value,333)
@@ -18,11 +17,11 @@ class Home extends Component{
         return <div className="home-container">
               <Layout >
                 <Header handleInput={(value)=>this.handleInput(value)}/>
-                <Row className="main-container">
+                <Row className="main">
                     <Col span={5}><Sider/></Col>
-                    <Col span={19}>{this.props.children}</Col>
+                    <Col className="right-wrapper" span={19}>{this.props.children}</Col>
                 </Row>
-                <BackTop target={() => document.querySelector('.main-container')} />
+                <BackTop visibilityHeight={1} target={() => document.querySelector('.right-wrapper')} />
                 <Footer>Footer</Footer>
                 </Layout>
         </div>
