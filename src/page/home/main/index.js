@@ -1,9 +1,10 @@
 import React from 'react'
 import Loading from '@/components/loading'
-import { List, Avatar, Icon,Divider,Tag } from 'antd';
+import { List, Divider } from 'antd';
 import {Link} from 'react-router-dom'
 import Preview from './preview'
 import './index.less'
+import {IconText,IconTag} from '@/components/iconEnhance'
 const listData = [];
 for (let i = 0; i < 23; i++) {
   listData.push({
@@ -16,18 +17,18 @@ for (let i = 0; i < 23; i++) {
       'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
   });
 }
-const IconText = ({ type, text }) => (
-    <span>
-      <Icon type={type} style={{ marginRight: 8 }} />
-      {text}
-    </span>
-  );
-  const IconTag = ({ type, tagGroup }) => (
-    <span>
-      <Icon type={type} style={{ marginRight: 8 }} />
-      {tagGroup.map((item,index)=> <Tag key={index} color="volcano">{item}</Tag>)}
-    </span>
-  );
+// const IconText = ({ type, text }) => (
+//     <span>
+//       <Icon type={type} style={{ marginRight: 8 }} />
+//       {text}
+//     </span>
+//   );
+//   const IconTag = ({ type, tagGroup }) => (
+//     <span>
+//       <Icon type={type} style={{ marginRight: 8 }} />
+//       {tagGroup.map((item,index)=> <Tag key={index} color="volcano">{item}</Tag>)}
+//     </span>
+//   );
   
 const Main = ()=>{
     return <div className="main-container">
@@ -55,7 +56,7 @@ const Main = ()=>{
                         <IconText type="star-o" text="156" />,
                         <IconText type="like-o" text="156" />,
                         <IconText type="message" text="2" />,
-                        <IconTag type="tag" tagGroup={['js','react']} />
+                        <IconTag type="tag" text={['js','react']} />
                         ]}
                         extra={
                         <img
