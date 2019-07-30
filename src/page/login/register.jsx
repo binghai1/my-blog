@@ -95,7 +95,7 @@ class Register extends Component {
         <Form.Item
           label={
             <span>
-              Nickname&nbsp;
+              username&nbsp;
               <Tooltip title="What do you want others to call you?">
                 <Icon type="question-circle-o" />
               </Tooltip>
@@ -131,10 +131,10 @@ class Register extends Component {
               },
             ],
           })(<Input.Password onBlur={this.handleConfirmBlur} />)}
-          <Button  style={{marginTop:20}} loading={confirmLoading} type="primary" htmlType="submit" className="login-form-button">
+        </Form.Item>
+        <Button style={{marginTop:20,width:"100%"}} loading={confirmLoading} type="primary" htmlType="submit" className="login-form-button">
             Register
           </Button>
-        </Form.Item>
       </Form>
         </Modal>
       </div>

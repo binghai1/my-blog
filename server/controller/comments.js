@@ -1,0 +1,65 @@
+
+const Comments = require('../models/comments')
+
+const SuccessModel = require('../util/succesModel')
+class CommentsController{
+    async create(ctx){
+        ctx.verifyParams({
+            content:{type:'string',required:true},
+            rootCommentID:{type:'string',required:false},
+            replyTo:{type:'string',required:false},
+            articleId:{type:'string',require:true}
+        })
+        const {content,rootCommentId,replyTo,articleId}=ctx.request.body
+        const commentor=ctx.state.user._id
+        let res=await new Comments({
+            commentor,rootCommentId,replyTo,content,articleId
+        }).save()
+        if(!res) ctx.trhow(404,"创建评论失败")
+        ctx.body=SuccessModel()
+    }
+    async find(ctx){
+        const {articleId}=ctx.params
+        let {page=1,perPage=5}=ctx.query
+        perPage=Math.max(perPage,1)
+        page=Math.max((page-1)*perPage,1)
+        let data=await Comments.find({articleId,rootCommentId:null})
+        .limit(perPage).skip(page).populate("replyTo")
+        if(!data) ctx.trhow(404,"查询出错")
+        for (let item of data){
+            let res= await CommentsController.findRootComment(item._id)
+            //mongoose不能直接修改shema，通过_doc映射数据
+            if(res) item._doc.childComments=res
+        }
+
+        ctx.body=SuccessModel(data)
+    }
+    static async findRootComment(rootCommentId){
+        let res= await Comments.find(
+            {rootCommentId}).limit(3).skip(0)
+        return res
+    }
+   
+    async remove(ctx){
+        const {id}=ctx.params
+        let flag=await Comments.findOneAndDelete({rootCommentId:id})
+        if(!flag) ctx.trhow(404,"删除评论失败")
+        let res=await Comments.findByIdAndRemove(id)
+        if(!res) ctx.trhow(404,"删除评论失败")
+        ctx.body=SuccessModel()
+    }
+    async checkCommentExist(ctx, next) {
+        const comments= await Comments.findById(ctx.params.id);
+        if (!comments) { ctx.throw(404, '评论不存在'); }
+        ctx.state.comments = comments;
+        await next();
+      }
+    async checkPermission(ctx,next){
+        if(ctx.state.comments.commentor!=ctx.state.user._id){
+            ctx.throw(404, '没有此评论权限');
+        }
+        await next()
+    }
+    
+}
+module.exports=new CommentsController()
