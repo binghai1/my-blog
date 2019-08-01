@@ -11,7 +11,7 @@ class TagsController{
         const creator=ctx.state.user._id
         let res=await new Tags({creator,title}).save()
         if(!res) ctx.trhow(404,"创建标签失败")
-        ctx.body=SuccessModel()
+        ctx.body=SuccessModel(res)
     }
     async find(ctx){
         const data=await Tags.find()

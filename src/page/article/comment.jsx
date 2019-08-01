@@ -3,6 +3,7 @@ import { Comment, Avatar,Alert,Divider,Tooltip } from 'antd';
 import {Link } from 'react-router-dom'
 import './comment'
 import moment from 'moment'
+import {connect } from 'react-redux'
 const ExampleComment = ({ children }) => (
   <Comment
     actions={[<span>Reply to</span>]}
@@ -37,19 +38,19 @@ const ExampleComment = ({ children }) => (
     {children}
   </Comment>
 );
-const CommentList=()=>(
-    <div className="comment-list">
+const CommentList=(props)=>{
+    const {authorized}=props
+    return <div className="comment-list">
         <Divider>评论</Divider>
-        
            
-        <Alert message={<span > 
-             请<Link style={{color:'#1890ff'}}>登陆</Link>后进行评论</span>
-            }type="info" showIcon/>
+        {!authorized&&<Alert message={<span > 
+             请<Link to="/" style={{color:'#1890ff'}}>登陆</Link>后进行评论</span>
+            }type="info" showIcon/>}
         
         <ExampleComment>
          <ExampleComment></ExampleComment>
         </ExampleComment>
     </div>
     
-)
-export default CommentList
+  }
+export default connect((state)=>({authorized:state.user.isAuthorization}))(CommentList)

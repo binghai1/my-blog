@@ -6,7 +6,8 @@ const ArticleSchema=new Schema({
     content:{type:String,required:true},
     likeCount:Number,
     owner:{type:Schema.Types.ObjectId,ref:'Users'},
-    tags:{type:[{type:Schema.Types.ObjectId,ref:'Tags'}],required:true}
+    tags:{type:[{type:Schema.Types.ObjectId,ref:'Tags'}],required:true},
+    updatedAt:{select:false}
 },{ timestamps: true })
 
 module.exports= model('Articles',ArticleSchema)

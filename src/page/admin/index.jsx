@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import { Layout, Menu, Icon } from 'antd';
 import {Link,withRouter} from 'react-router-dom'
+import {connect} from 'react-redux'
 import './index.less'
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -33,14 +34,23 @@ const menuList=[
         ]
     }
 ]
+
 @withRouter
+@connect((state)=>({user:state.user}),
+ 
+  )
 class Admin extends Component {
   state = {
     collapsed: false,
     openKeys:[]
   };
-  componentWillMount(){
-    const pathname=this.props.location.pathname;
+  componentDidMount(){
+    const {user}=this.props
+    let {location,history} = this.props
+    if(!user||user.role!="管理员"){
+      history.push('/')
+    }
+    const pathname=location.pathname;
     const index=pathname.lastIndexOf('/');
     const openKeys=[pathname.slice(0,index)];
     this.setState({openKeys})
@@ -101,4 +111,5 @@ class Admin extends Component {
     );
   }
 }
+
 export default  Admin

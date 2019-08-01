@@ -4,11 +4,13 @@ import {BrowserRouter,Route,Switch} from 'react-router-dom'
 import  Home from './page/home'
 import  Article from './page/article'
 import  Main from './page/home/main'
-import  Category from './page/category'
 import  Other from './page/other'
 import Admin from './page/admin'
 import Edit from './page/admin/edit'
 import Manage from './page/admin/manage'
+import NotFound from './page/404'
+import TagsList from './page/tagsList'
+import TimeList from './page/timeList'
 class MainRouter extends Component{
     render(){
         return <BrowserRouter >
@@ -26,9 +28,11 @@ class MainRouter extends Component{
                          <Home>
                             <Switch>
                                 <Route path='/' exact  component={Main}/>
-                                <Route   path='/category' component={Category}/>
+                                <Route   path='/time' component={TimeList}/>
                                 <Route   path='/other' component={Other}/>
                                 <Route   path='/article/:id' component={Article}/>
+                                <Route   path='/tags/:id/:name' component={TagsList}/>
+                                  <Route  path='/*' component={NotFound} />
                             </Switch>
                         </Home>
                      )} />

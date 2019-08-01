@@ -4,13 +4,16 @@ import SimpleMDE from 'simplemde'
 import 'simplemde/dist/simplemde.min.css'
 import TagGroup from './tagGroup'
 import {translateMarkdown} from '@/util'
+import {getTagsUrl,createArticleUrl} from '@/util/interfaces'
+import {connect} from 'react-redux'
+import axios from 'axios'
+
 
 const Edit = memo((props)=>{
+    const {selectTags} = props
     const [isEdit,setIsEdit]=useState(false)
     const [tags,setTags]=useState([
-        'javascript',
-        'es6',
-        'react'
+        
     ])
     let markdown=useRef()
 
@@ -22,12 +25,23 @@ const Edit = memo((props)=>{
         previewRender: translateMarkdown
        });
     },[])
+    useEffect( ()=>{
+        axios.get(getTagsUrl).then((res)=>{
+            setTags(res.data.data)
+        })
+       },[]);
     const handleForm=()=>{
          props.form.validateFields((err,value)=>{
-            if(err){
-                message.info('请验证输入数据');
+            if(!err){
+                let data={
+                    title:value.title,
+                    content:markdown.current.value(),
+                    tags:selectTags
+                }
+                axios.post(createArticleUrl,data)
+                console.log(data,"提交表单数据")
+                message.success("创建文章成功")
             }
-            console.log(value)
         })
     }
     const handleChange=(e)=>{
@@ -58,4 +72,11 @@ const Edit = memo((props)=>{
         </div>
     )
 })
-export default Form.create()(Edit)
+
+export default connect(
+    (state)=>({
+        selectTags:state.model.selectTags
+      }),()=>({
+        
+      })
+)(Form.create()(Edit))

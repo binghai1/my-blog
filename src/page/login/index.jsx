@@ -2,14 +2,17 @@ import { Modal, Button,Form,Input,Icon,Checkbox,message } from 'antd';
 import React ,{Component} from 'react'
 import { connect } from 'react-redux';
 import './index.less'
-import * as actionCreators from '@/store/actionCreators'
+import {getModel,getRegisterModel,setUser} from '@/store/actionCreators'
 @connect((state)=>({visible:state.model.showLogin}),
 (dispatch)=>({
     showModal(flag){
-        dispatch(actionCreators.getModel(flag))
+        dispatch(getModel(flag))
     },
     showRegisterModel(flag){
-        dispatch(actionCreators.getRegisterModel(flag))
+        dispatch(getRegisterModel(flag))
+    },
+    startLogin(data){
+      return dispatch(setUser(data))
     }
 }))
 
@@ -25,20 +28,19 @@ class Login extends Component {
   
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, values) => {
       if (!err) {
         this.setState({
             confirmLoading: true,
-          });
-          setTimeout(() => {
-            this.setState({
-              confirmLoading: false,
-            },()=>{
-                this.props.showModal(false)
-                message.success('login successful');
-            });
-          }, 2000);
-        console.log('Received values of form: ', values);
+        });
+        let res=await this.props.startLogin(values)
+        this.setState({
+          confirmLoading: false,
+        });
+        console.log(res)
+        if(!res)return
+        this.props.showModal(false)
+        message.success('login successful');
       }
     });
 }
@@ -64,12 +66,12 @@ handleRegister=(e)=>{
         >
          <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item>
-          {getFieldDecorator('username', {
-            rules: [{ required: true, message: 'Please input your username!' }],
+          {getFieldDecorator('email', {
+            rules: [{type: 'email', message: 'The input is not valid E-mail!'},{ required: true, message: 'Please input your email!' }],
           })(
             <Input
               prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="Username"
+              placeholder="email"
             />,
           )}
         </Form.Item>

@@ -6,10 +6,10 @@ export const IconText = ({ type, text }) => (
       {text}
     </span>
   );
- export  const IconTag = ({ type, text }) => (
+ export  const IconTag = ({ type, text ,useIdexKey}) => (
     <span>
       <Icon type={type} style={{ marginRight: 8 }} />
-      {text.map((item,index)=> <Tag key={index} color="volcano">{item}</Tag>)}
+      {text&&text.map((item,index)=> <Tag key={useIdexKey?index:item._id} color="volcano">{item.title}</Tag>)}
     </span>
   );
   export default {IconText,IconTag}

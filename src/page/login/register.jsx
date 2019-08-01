@@ -1,12 +1,16 @@
-import { Modal, Button,Form,Input,Icon,Checkbox,message,Tooltip} from 'antd';
+import { Modal, Button,Form,Input,Icon,message,Tooltip} from 'antd';
 import React ,{Component} from 'react'
 import { connect } from 'react-redux';
 import './index.less'
-import * as actionCreators from '@/store/actionCreators'
+import {getRegisterModel,getModel}from '@/store/actionCreators'
+import {registerUrl} from '@/util/interfaces'
 @connect((state)=>({visible:state.model.showRegister}),
 (dispatch)=>({
     showModal(flag){
-        dispatch(actionCreators.getRegisterModel(flag))
+        dispatch(getRegisterModel(flag))
+    },
+    showLoginModel(flag){
+      dispatch(getModel(flag))
     }
 }))
 class Register extends Component {
@@ -35,22 +39,21 @@ class Register extends Component {
     }
     callback();
   };
-  handleSubmit = e => {
+  handleSubmit =  e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, values) => {
       if (!err) {
         this.setState({
             confirmLoading: true,
           });
-          setTimeout(() => {
+            let res=await this.$axios.post(registerUrl,values)
             this.setState({
               confirmLoading: false,
-            },()=>{
-                this.props.showModal(false)
-                message.success('register successful');
             });
-          }, 2000);
-        console.log('Received values of form: ', values);
+            if(res.status!==200)return
+            this.props.showModal(false)
+            this.props.showLoginModel(true)
+            message.success('注册成功，请登录',5);
       }
     });
 }

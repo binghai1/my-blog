@@ -1,7 +1,10 @@
 import React from 'react'
 import lodingGif from '@/assets/images/loading.gif'
-import './loding.less'
-const Loading = ()=>{
+import './index.less'
+const LoadingAct = (props)=>{
     return <img src={lodingGif} ></img>
 }
-export default Loading
+
+
+
+export default LoadingAct

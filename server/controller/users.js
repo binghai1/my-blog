@@ -30,12 +30,13 @@ class UserController{
           email:{type:'string',required:true},
           password:{type:'string',required:true},
         })
-        let user=await User.findOne({email})
+        let user=await User.findOne({email}).select("+password")
+        console.log(user,777)
         if(!user){ctx.throw(404,"用户名不存在")}
         const res=await bcrypt.compare(password, user.password)
         if(!res){ctx.throw(404,"用户名或密码错误")}
-        const {_id,username}=user
-        const token=jwt.sign( {_id,username} , secret, { expiresIn: 60 * 60 });
+        const {_id,username,role}=user
+        const token=jwt.sign( {_id,username,role} , secret, { expiresIn: 60 * 60 * 24 });
         ctx.body=SuccessModel({token})
         }
 }

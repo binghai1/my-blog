@@ -1,9 +1,13 @@
-import React,{useState,useRef,useEffect,memo} from 'react'
+import React,{useState,useRef,useEffect,memo,useCallback} from 'react'
 import porpTypes from 'prop-types'
 import {Input,Tag,Icon,Tooltip} from 'antd'
 import Cate from './cate'
+import axios from 'axios';
+import {createTagsUrl,deleteTagsUrl} from '@/util/interfaces'
+import {setTags} from '@/store/actionCreators'
+import {connect} from 'react-redux'
 const TagGroup=memo((props)=>{
-    const {onChangeTags,tags}=props
+    const {tags,removeSelectTags,setSelectTags}=props
     const [inputVisible,setInputVisivle] = useState(false)
     const [inputValue,setInputValue]=useState('')
     const InputDom=useRef()
@@ -16,39 +20,40 @@ const TagGroup=memo((props)=>{
         setInputValue(e.target.value)
     };
 
-    const handleClose = removedTag => {
-        console.log(44)
-        const temp = newTags.filter(tag => tag !== removedTag);
+    const handleClose = async removedTag => {
+        const temp = newTags.filter(tag => tag._id!== removedTag._id);
+        await axios.delete(deleteTagsUrl(removedTag._id))
         setNewTags(temp)
+        setSelectTags(removedTag._id)
       };
 
     const showInput = () => {
         setInputVisivle(true);
-        
     };
 
-    const handleInputConfirm = () => {
+    const handleInputConfirm =useCallback(async () => {
         if (inputValue && newTags.indexOf(inputValue) === -1) {
-          const temp = [...newTags, inputValue];
+          let res=await axios.post(createTagsUrl,{title:inputValue})
+          const temp = [...newTags, res.data.data];
           setNewTags(temp)
+          
+          setSelectTags(res.data.data._id)
         }
         setInputVisivle(false)
         setInputValue('')
-      };
-     const  handleClick=(tag)=>{
-        console.log(tag,333)
-      }
+      }) ;
+     
     return <div className="tag-group" style={{marginTop:20,marginBottom:20}}>
-      <Cate tags={tags}/>
+      <Cate tags={tags} />
       {newTags.map((tag, index) => {
-          const isLongTag = tag.length > 20;
+          const isLongTag = tag.title.length > 20;
           const tagElem = (
-            <Tag key={tag}   closable onClose={()=>handleClose(tag)} color="#1890ff">
-              {isLongTag ? `${tag.slice(0, 20)}...` : tag}
+            <Tag key={tag._id}   closable onClose={()=>handleClose(tag)} color="#1890ff">
+              {isLongTag ? `${tag.title.slice(0, 20)}...` : tag.title}
             </Tag>
           );
           return isLongTag ? (
-            <Tooltip title={tag} key={tag}>
+            <Tooltip title={tag.title} key={index}>
               {tagElem}
             </Tooltip>
           ) : (
@@ -76,4 +81,12 @@ const TagGroup=memo((props)=>{
 TagGroup.porpTypes={
     sourceData:porpTypes.array.isRequired
 }
-export default TagGroup
+export default connect(
+  (state)=>({
+    }),(dispatch)=>({
+      setSelectTags(tag){
+        dispatch(setTags(tag))
+      },
+     
+    })
+)(TagGroup)

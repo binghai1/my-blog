@@ -10,7 +10,7 @@ const navList=[
     {
         icon:'folder',
         text:"归档",
-        path:'/category'
+        path:'/time'
     },
     {
         icon:'coffee',
@@ -24,7 +24,6 @@ const navList=[
     }
 ]
 const Nav=(props)=>{
-    console.log(props)
     return <Menu  selectedKeys={[props.location.pathname]} mode="horizontal">
            {navList.map((item)=>(
             <Menu.Item className="nav" key={item.path}>

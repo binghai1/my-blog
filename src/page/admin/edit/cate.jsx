@@ -1,11 +1,17 @@
-import React, { Fragment } from 'react'
+import React, { Fragment,PureComponent } from 'react'
 
 import { Tag } from 'antd';
+import { connect } from 'react-redux';
+import {setTags} from '@/store/actionCreators'
+const {CheckableTag}=Tag
+@connect(()=>({
 
-const { CheckableTag } = Tag;
-
-
-class Cate extends React.Component {
+}),(dispatch)=>({
+  setSelectTags(tag){
+    dispatch(setTags(tag))
+  }
+}))
+class Cate extends PureComponent {
   state = {
     selectedTags: [],
   };
@@ -13,23 +19,22 @@ class Cate extends React.Component {
   handleChange(tag, checked) {
     const { selectedTags } = this.state;
     const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
-    console.log('You are interested in: ', nextSelectedTags);
     this.setState({ selectedTags: nextSelectedTags });
+    this.props.setSelectTags(tag)
   }
-
   render() {
-      const {tags} = this.props
     const { selectedTags } = this.state;
+    const {tags} = this.props
     return (
       <Fragment>
         <h6 style={{ marginRight: 8, display: 'inline' }}>Tags:</h6>
         {tags.map(tag => (
           <CheckableTag
-            key={tag}
-            checked={selectedTags.indexOf(tag) > -1}
-            onChange={checked => this.handleChange(tag, checked)}
+            key={tag._id}
+            checked={selectedTags.indexOf(tag._id) > -1}
+            onChange={checked => this.handleChange(tag._id, checked)}
           >
-            {tag}
+            {tag.title}
           </CheckableTag>
         ))}
       </Fragment>
