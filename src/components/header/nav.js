@@ -1,30 +1,10 @@
 import React from 'react'
-import {withRouter,NavLink} from 'react-router-dom'
+import {withRouter,NavLink,} from 'react-router-dom'
 import {Menu,Icon} from 'antd'
-const navList=[
-    {
-        icon:'home',
-        text:"首页",
-        path:'/'
-    },
-    {
-        icon:'folder',
-        text:"归档",
-        path:'/time'
-    },
-    {
-        icon:'coffee',
-        text:"其他",
-        path:'/other'
-    },
-    {
-        icon:'user',
-        text:"关于",
-        path:'/about'
-    }
-]
+import {navList} from '@/store/constant'
 const Nav=(props)=>{
-    return <Menu  selectedKeys={[props.location.pathname]} mode="horizontal">
+    
+      return  <Menu  selectedKeys={[props.location.pathname]} mode="horizontal">
            {navList.map((item)=>(
             <Menu.Item className="nav" key={item.path}>
                 <NavLink to={item.path}>
@@ -33,6 +13,7 @@ const Nav=(props)=>{
                 </NavLink>
              </Menu.Item>
             ))}
-    </Menu>
+        </Menu>
+  
 }
 export default  withRouter(Nav)

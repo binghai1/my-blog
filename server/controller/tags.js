@@ -20,7 +20,7 @@ class TagsController{
     }
     async findById(ctx){
         const {id}=ctx.params
-        const data=await Articles.find({tags:id})
+        const data=await Articles.find({tags:id}).sort({_id:-1})
         if(!data) ctx.trhow(404,"查询出错")
         ctx.body=SuccessModel(data)
     }

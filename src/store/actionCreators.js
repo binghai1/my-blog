@@ -2,7 +2,7 @@ import axios from 'axios'
 import {loginUrl} from '../util/interfaces'
 import jwt_decode from 'jwt-decode'
 import {SHOW_LOGIN_MODEL,SHOW_REGISTER_MODEL,
-    SET_USER,SET_AUTHORIZATION, SET_TAGS,SET_LIST,SAVE_TAGS} from '../store/constant'
+    SET_USER,SET_AUTHORIZATION, SET_TAGS,SET_LIST,SAVE_TAGS,SET_WIDTH} from '../store/constant'
 
 export const getModel=(flag)=>({
     type:SHOW_LOGIN_MODEL,
@@ -15,7 +15,7 @@ export const getRegisterModel=(flag)=>({
 export const setUser= (data)=>{
     return async (dispatch)=>{
        let res=await axios.post(loginUrl,data)
-       if(res.status!=200) return 
+       if(res.status!==200) return 
        let token=res.data.data.token
        let user=jwt_decode(token)
        localStorage.setItem("token",token)
@@ -46,13 +46,18 @@ export const saveTags= (tags)=>{
          tags
     }
 }
-export const setList= (list)=>{
+export const saveHomeList= (list)=>{
     return {
          type:SET_LIST,
          list
     }
 }
-
+export const setWidth= (width)=>{
+    return {
+         type:SET_WIDTH,
+         width
+    }
+}
 export const setUserInfo= (user)=>{
     return {
          type:SET_USER,
@@ -64,7 +69,7 @@ export const setUserInfo= (user)=>{
     }
 }
 const isEmpty=(value)=>{
-    return value==undefined||value==""
-    ||(typeof value =="object"&&Object.keys(value).length==0)
-    ||(typeof value =="array"&&value.trim().length==0)
+    return value===undefined||value===""
+    ||(typeof value ==="object"&&Object.keys(value).length===0)
+    ||(typeof value ==="array"&&value.trim().length===0)
 }

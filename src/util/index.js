@@ -3,10 +3,7 @@ import marked from 'marked'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 import axios from 'axios'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import {Spin,message} from 'antd'
-import { arrayExpression } from '@babel/types';
+import {message} from 'antd'
 export const translateMarkdown = (plainText, isGuardXss = false) => {
     return marked(isGuardXss ? xss(plainText) : plainText, {
       renderer: new marked.Renderer(),
@@ -24,7 +21,7 @@ export const translateMarkdown = (plainText, isGuardXss = false) => {
   }
 export const axiousInsterors=()=>{
     axios.interceptors.request.use(config=>{
-      ReactDOM.render(<Spin/>,document.getElementById("loading-wrapper"))
+      // ReactDOM.render(<Spin/>,document.getElementById("loading-wrapper"))
       if(localStorage.token){
         config.headers.Authorization="Bearer "+localStorage.token
       }
@@ -37,7 +34,7 @@ export const axiousInsterors=()=>{
     },error=>{
       let tip="";
       switch(error.response.status){
-        case 404 : tip=error.response.data.message; break;
+        case 404 : tip="服务器异常，请稍后再试"; break;
         case 403 : tip="您没有权限"; break;
         case 401 : {
           localStorage.token&&localStorage.removeItem("token")

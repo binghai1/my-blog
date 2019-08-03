@@ -11,6 +11,9 @@ import jwt_decode from 'jwt-decode'
     },
     setUserInfo(user){
       dispatch(actionCreators.setUserInfo(user))
+    },
+    setWidth(width){
+      dispatch(actionCreators.setWidth(width))
     }
 }))
 @withRouter
@@ -22,14 +25,15 @@ class App extends Component {
     }
   }
   componentWillMount(){
-  const {setUserInfo,setAuthorization}=this.props
+  const {setUserInfo,setAuthorization,setWidth}=this.props
     let token=localStorage.token
     if(token){
        let user=jwt_decode(token)
        setAuthorization(user)
+       console.log(user,"用户")
        setUserInfo(user)
     }
-    console.log("初始化")
+    setWidth(document.documentElement.clientWidth)
   }
   render(){
     return (

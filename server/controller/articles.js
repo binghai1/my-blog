@@ -19,15 +19,14 @@ class ArticlesController{
         ctx.body=SuccessModel()
     }
     async find(ctx){
-        let {q,page=1,perPage=5,onlyTitle}=ctx.query
+        //onlyTitle 是用来排除content返回
+        let {q,page=0,perPage=10,onlyTitle,tag}=ctx.query
         perPage=Math.max(perPage,1)
-        page=Math.max((page-1)*perPage,1)
-        q=RegExp(q)
+        page=Math.max((page-1)*perPage,0)
+        q=new RegExp(q)
         let data=""
         if(onlyTitle){
-            perPage=20
-            page=Math.max((page-1)*perPage,1)
-            data=await Articles.find().select("-content")
+            data=await Articles.find().sort({_id:-1}).select("-content")
             .limit(perPage)
             .skip(page)
             if(!data) ctx.throw(404,"查询出错")
@@ -38,11 +37,17 @@ class ArticlesController{
                 totalCount
             }
         }else{
-            data=await Articles.find({$or:[{title:q},{cotent:q}]}).populate("tags")
+            let obj=""
+            if(tag){
+               obj={title:q,tags:tag}
+            }else{ 
+                obj={$or:[{title:q},{content:q}]}
+            }
+            data=await Articles.find(obj).sort({_id:-1}).populate("tags")
             .limit(perPage)
             .skip(page)
             if(!data) ctx.throw(404,"查询出错")
-            let totalPage = Math.ceil(await Articles.count({$or:[{title:q},{cotent:q}]})/perPage)
+            let totalPage = Math.ceil(await Articles.count({$or:[{title:q},{content:q}]})/perPage)
             ctx.body={
                 code:0,
                 data,
@@ -51,6 +56,7 @@ class ArticlesController{
         }
         
     }
+    
     async findById(ctx){
         const {id}=ctx.params
         
@@ -77,7 +83,6 @@ class ArticlesController{
         const {id}=ctx.params
         let res=await Articles.findByIdAndRemove(id)
         if(!res) ctx.trhow(404,"删除文章失败")
-        console.log(res)
         ctx.body=SuccessModel()
     }
     async checkArticlesExist(ctx, next) {

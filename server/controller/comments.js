@@ -6,25 +6,25 @@ class CommentsController{
     async create(ctx){
         ctx.verifyParams({
             content:{type:'string',required:true},
-            rootCommentID:{type:'string',required:false},
+            rootCommentId:{type:'string',required:false},
             replyTo:{type:'string',required:false},
             articleId:{type:'string',require:true}
         })
         const {content,rootCommentId,replyTo,articleId}=ctx.request.body
         const commentor=ctx.state.user._id
-        let res=await new Comments({
+        let data=await new Comments({
             commentor,rootCommentId,replyTo,content,articleId
         }).save()
-        if(!res) ctx.trhow(404,"创建评论失败")
-        ctx.body=SuccessModel()
+        if(!data) ctx.trhow(404,"创建评论失败")
+        ctx.body=SuccessModel(data)
     }
     async find(ctx){
         const {articleId}=ctx.params
-        let {page=1,perPage=5}=ctx.query
+        let {page=0,perPage=5}=ctx.query
         perPage=Math.max(perPage,1)
-        page=Math.max((page-1)*perPage,1)
-        let data=await Comments.find({articleId,rootCommentId:null})
-        .limit(perPage).skip(page).populate("replyTo")
+        page=Math.max((page-1)*perPage,0)
+        let data=await Comments.find({articleId,rootCommentId:null}).sort({_id:-1})
+        .limit(perPage).skip(page).populate("replyTo commentor")
         if(!data) ctx.trhow(404,"查询出错")
         for (let item of data){
             let res= await CommentsController.findRootComment(item._id)
@@ -36,17 +36,22 @@ class CommentsController{
     }
     static async findRootComment(rootCommentId){
         let res= await Comments.find(
-            {rootCommentId}).limit(3).skip(0)
+            {rootCommentId}).sort({_id:-1}).limit(10).skip(0).populate("commentor")
         return res
     }
    
     async remove(ctx){
         const {id}=ctx.params
+        let data=await Comments.findByIdAndRemove(id)
+        if(!data) ctx.throw(404,"删除评论失败")
+        ctx.body=SuccessModel(data)
+    }
+    async removeAll(ctx){
+        const {id}=ctx.params
         let flag=await Comments.findOneAndDelete({rootCommentId:id})
-        if(!flag) ctx.trhow(404,"删除评论失败")
-        let res=await Comments.findByIdAndRemove(id)
-        if(!res) ctx.trhow(404,"删除评论失败")
-        ctx.body=SuccessModel()
+        let data=await Comments.findByIdAndRemove(id)
+        if(!data) ctx.throw(404,"删除评论失败")
+        ctx.body=SuccessModel(data)
     }
     async checkCommentExist(ctx, next) {
         const comments= await Comments.findById(ctx.params.id);

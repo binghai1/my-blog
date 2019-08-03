@@ -31,7 +31,6 @@ class UserController{
           password:{type:'string',required:true},
         })
         let user=await User.findOne({email}).select("+password")
-        console.log(user,777)
         if(!user){ctx.throw(404,"用户名不存在")}
         const res=await bcrypt.compare(password, user.password)
         if(!res){ctx.throw(404,"用户名或密码错误")}
@@ -39,5 +38,32 @@ class UserController{
         const token=jwt.sign( {_id,username,role} , secret, { expiresIn: 60 * 60 * 24 });
         ctx.body=SuccessModel({token})
         }
+    async remove(ctx){
+        if(ctx.state.user.role!="管理员"){
+            ctx.throw(404, '没有此文章权限');
+        }
+        const {id}=ctx.params
+        let user=await User.findByIdAndDelete(id)
+        if(!user){ctx.throw(404,"删除失败")} 
+        ctx.body=SuccessModel()
+        }
+    async find(ctx){
+        let {q,page=0,perPage=6}=ctx.query
+        perPage=Math.max(perPage,1)
+        page=Math.max((page-1)*perPage,0)
+        q=new RegExp(q)
+        let data=await User.find({username:q}).select("+email").sort({_id:-1})
+        .limit(perPage)
+        .skip(page)
+        if(!data) ctx.throw(404,"查询出错")
+        let totalCount = await User.count({username:q})
+        ctx.body={
+            code:0,
+            data,
+            totalCount
+        }
+       }
+      
+
 }
 module.exports=new UserController()

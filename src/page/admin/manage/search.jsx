@@ -1,15 +1,22 @@
 import React,{Component} from 'react'
 import { Form,  Input, Button,Select,Checkbox } from 'antd';
+import PropTypes from 'prop-types'
 const {Option} = Select
 class Search extends Component{
     state={
 
     }
+    static propTypes={
+      handleSearchClick:PropTypes.func.isRequired,
+      tags:PropTypes.array.isRequired
+    }
     handleClick(){
-       console.log( this.props.form.getFieldsValue())
+      const value=this.props.form.getFieldsValue()
+      this.props.handleSearchClick(value)
     }
     render(){
         const {getFieldDecorator} = this.props.form
+        const {tags} = this.props
         return (<Form layout="inline" onSubmit={this.handleSubmit}>
             <Form.Item label="标题">
             {getFieldDecorator('title')(
@@ -19,10 +26,13 @@ class Search extends Component{
           )}
             </Form.Item>
             <Form.Item label="标签">
-            {getFieldDecorator('tags')(
+            {getFieldDecorator('tag')(
             <Select style={{ width: 200 }} placeholder="Please select a tag" hasFeedback >
-              <Option value="female">female</Option>
-              <Option value="male">male</Option>
+              {
+                tags.map(item=>(
+                  <Option key={item._id} value={item._id}>{item.title}</Option>
+                ))
+              }
             </Select>,
           )}
             </Form.Item>

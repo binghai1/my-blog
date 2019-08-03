@@ -14,13 +14,15 @@ class TimeList extends Component{
     }
    
     async componentDidMount(){
-       let res=await axios.get(getArticlesUrl({onlyTitle:true}))
-       let newArr=groupBy(res.data.data,item=>item.createdAt.slice(0,4))
-      this.setState({list:newArr,total:parseInt(res.data.totalCount),loading:false})
-      
+      this.fetchData()
+    }
+    fetchData=async (obj)=>{
+      let res=await axios.get(getArticlesUrl({...obj,onlyTitle:true}))
+      let newArr=groupBy(res.data.data,item=>item.createdAt.slice(0,4))
+     this.setState({list:newArr,total:parseInt(res.data.totalCount),loading:false})
     }
     handlePageChange=(page)=>{
-        console.log(page)
+      this.fetchData({page})
     }
    
     render(){
@@ -28,7 +30,7 @@ class TimeList extends Component{
         return (
           <div className="content-inner-wrapper archives">
             <Spin tip="Loading..." spinning={loading}>
-              <Timeline>
+              <Timeline style={{marginBottom:40}}>
                 {list.map((d, i) => (
                   <Fragment key={i}>
                     {i === 0 && (
@@ -57,14 +59,15 @@ class TimeList extends Component{
                 ))}
               </Timeline>
       
-              {list.length < total && (
-                <Pagination style={{marginLeft:20}}
+             
+            </Spin>
+            {list.length < total && (
+                <Pagination style={{position:"absolute",bottom:40}}
                   onChange={this.handlePageChange}
                   total={total}
-                  pageSize={15}
+                  pageSize={10}
                 />
               )}
-            </Spin>
           </div>
         )
     }

@@ -11,6 +11,8 @@ import Manage from './page/admin/manage'
 import NotFound from './page/404'
 import TagsList from './page/tagsList'
 import TimeList from './page/timeList'
+import UserMange from './page/admin/userManage'
+import Category from './page/category'
 class MainRouter extends Component{
     render(){
         return <BrowserRouter >
@@ -21,6 +23,7 @@ class MainRouter extends Component{
                             <Switch>
                                 <Route  path='/admin/articles/edit' component={Edit}/>
                                 <Route path='/admin/articles/manage' component={Manage}/>
+                                <Route path='/admin/users/manage' component={UserMange}/>
                             </Switch>
                         </Admin>
                     )}/>
@@ -29,6 +32,7 @@ class MainRouter extends Component{
                             <Switch>
                                 <Route path='/' exact  component={Main}/>
                                 <Route   path='/time' component={TimeList}/>
+                                <Route   path='/category' component={Category}/>
                                 <Route   path='/other' component={Other}/>
                                 <Route   path='/article/:id' component={Article}/>
                                 <Route   path='/tags/:id/:name' component={TagsList}/>

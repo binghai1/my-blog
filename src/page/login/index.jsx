@@ -37,7 +37,6 @@ class Login extends Component {
         this.setState({
           confirmLoading: false,
         });
-        console.log(res)
         if(!res)return
         this.props.showModal(false)
         message.success('login successful');

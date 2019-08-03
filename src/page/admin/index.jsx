@@ -3,18 +3,15 @@ import { Layout, Menu, Icon } from 'antd';
 import {Link,withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import './index.less'
+
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 const menuList=[
     {
-        icon:'home',
-        text:"首页",
-        path:"/admin/home"
-    },
-    {
-        icon:'category',
-        text:"分类 ",
-        path:"/admin/category"
+    icon:'home',
+    text:"首页",
+    path:"/admin/home"
+
     },
     {
         icon:"edit",
@@ -32,6 +29,11 @@ const menuList=[
                 text:"管理文章",
             }
         ]
+    },
+    {
+      icon:'user',
+      text:"用户",
+      path:"/admin/users/manage"
     }
 ]
 
@@ -42,12 +44,12 @@ const menuList=[
 class Admin extends Component {
   state = {
     collapsed: false,
-    openKeys:[]
+    openKeys:[],
   };
-  componentDidMount(){
+  async componentWillMount(){
     const {user}=this.props
     let {location,history} = this.props
-    if(!user||user.role!="管理员"){
+    if(!user||user.role!=="管理员"){
       history.push('/')
     }
     const pathname=location.pathname;
@@ -96,12 +98,12 @@ class Admin extends Component {
             />
           </Header>
 
-          <Content
+          <Content className="right-main-wrapper"
             style={{
               margin: '24px 16px',
               padding: 24,
               background: '#fff',
-              minHeight: 280,
+              
             }}
           >
           {this.props.children}

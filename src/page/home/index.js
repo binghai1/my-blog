@@ -9,7 +9,10 @@ import LoadingAct from '@/components/loading'
 import {getTagsUrl} from '../../util/interfaces'
 import * as actionCreators from '@/store/actionCreators'
 import axios from 'axios'
-const {  Footer } = Layout;
+
+const siderLayout = { xxl: 4, xl: 5, lg: 5, sm: 0, xs: 0 }
+const contentLayout = { xxl: 20, xl: 19, lg: 19, sm: 24, xs: 24 }
+
 @withRouter
 @connect((state)=>({
     list:state.model.list
@@ -18,6 +21,7 @@ const {  Footer } = Layout;
     dispatch(actionCreators.saveTags(tags))
     }
 }))
+
 class Home extends PureComponent{
     constructor(props){
         super(props)
@@ -31,23 +35,20 @@ class Home extends PureComponent{
             saveTags(res.data.data)
         })
     }
-    handleInput(value){
-        console.log(value,333)
-    }
+   
     render(){
-        console.log(222)
         const {list } = this.props
         return <div className="home-container">
               <Layout >
-                <Header handleInput={(value)=>this.handleInput(value)}/>
+                <Header />
                 <Row className="main">
-                    <Col span={5}><Sider/></Col>
-                    <Col className="right-wrapper" span={19}>
+                    <Col {...siderLayout} ><Sider/></Col>
+                    <Col {...contentLayout } className="right-wrapper" >
                          {list?this.props.children:<LoadingAct/>}
                     </Col>
                 </Row>
                 <BackTop visibilityHeight={1} target={() => document.querySelector('.right-wrapper')} />
-                <Footer>Footer</Footer>
+                {/* <Footer>Footer</Footer> */}
                 </Layout>
         </div>
     }

@@ -4,7 +4,9 @@
     background-color: #fff ;
     -webkit-box-shadow: 0 2px 8px #f0f1f2;
     box-shadow: 0 2px 8px #f0f1f2;
+    position: relative;
     z-index: 10;
+   
     .search-bar{
         float: left;
         margin-top: 20px;
@@ -22,6 +24,13 @@
                 height: 22px;
                 border:none;
                 box-shadow: none;
+                width: 200px;
+            }
+            @media screen and (max-width : 738px) {
+                .ant-input{
+                    
+                    width: 80px;
+                }
             }
         }
        
@@ -33,12 +42,25 @@
     }
     .btn-group{
         float: right;
-        
+    }
+    @media screen and (max-width : 738px) {
+        .btn-group{
+            margin-right: 5px !important;
+            .ant-btn-primary{
+                margin-right: 5px !important;
+            }
+        }
     }
     .user-avatar{
-        margin: 0 20px;
+        margin: 5px  20px 0px 20px;
         float:right;
     }
+    @media screen and (max-width : 738px) {
+        .user-avatar{
+            margin: 5px  10px 0px 10px;
+        }
+    }
+  
     .menu-bar{
         float: right;
         margin: 0 10px;
@@ -50,5 +72,15 @@
             border-bottom: none
         }
     }
-   
+    .phone-title{
+        font-size: 20px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%)
+    }
+    .iconkeai{
+        color:#1296db;
+        font-size: 16px;
+        margin-right: 10px
+    }
 }

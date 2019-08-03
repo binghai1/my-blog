@@ -1,4 +1,4 @@
-import React,{useState,useRef,useEffect,memo,useCallback} from 'react'
+import React,{useState,useRef,useEffect,memo} from 'react'
 import porpTypes from 'prop-types'
 import {Input,Tag,Icon,Tooltip} from 'antd'
 import Cate from './cate'
@@ -7,7 +7,7 @@ import {createTagsUrl,deleteTagsUrl} from '@/util/interfaces'
 import {setTags} from '@/store/actionCreators'
 import {connect} from 'react-redux'
 const TagGroup=memo((props)=>{
-    const {tags,removeSelectTags,setSelectTags}=props
+    const {tags,setSelectTags}=props
     const [inputVisible,setInputVisivle] = useState(false)
     const [inputValue,setInputValue]=useState('')
     const InputDom=useRef()
@@ -31,7 +31,7 @@ const TagGroup=memo((props)=>{
         setInputVisivle(true);
     };
 
-    const handleInputConfirm =useCallback(async () => {
+    const handleInputConfirm =async () => {
         if (inputValue && newTags.indexOf(inputValue) === -1) {
           let res=await axios.post(createTagsUrl,{title:inputValue})
           const temp = [...newTags, res.data.data];
@@ -41,7 +41,7 @@ const TagGroup=memo((props)=>{
         }
         setInputVisivle(false)
         setInputValue('')
-      }) ;
+      } ;
      
     return <div className="tag-group" style={{marginTop:20,marginBottom:20}}>
       <Cate tags={tags} />

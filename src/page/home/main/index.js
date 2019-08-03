@@ -1,4 +1,4 @@
-import React,{useEffect,useState,memo} from 'react'
+import React,{useEffect,useState,memo, Fragment} from 'react'
 import { List, Divider } from 'antd';
 import {Link} from 'react-router-dom'
 import Preview from './preview'
@@ -7,28 +7,55 @@ import {IconText,IconTag} from '@/components/iconEnhance'
 import moment from 'moment'
 import axios from 'axios'
 import {getArticlesUrl} from '@/util/interfaces'
-const Main = memo(()=>{
+import {withRouter} from 'react-router-dom'
+import {saveHomeList} from '@/store/actionCreators'
+import {translateMarkdown}  from '@/util'
+import {connect} from 'react-redux'
+import LoadingAct from '@/components/loading';
+const Main = ({location,saveList,width})=>{
+
     const [list,setList]=useState("")
     const [totalPage,setTotalPage]=useState(1)
+    const [loading,setLoading]=useState(false)
+
     useEffect(()=>{
-        axios.get(getArticlesUrl()).then((res)=>{
-            setList(res.data.data)
-            setTotalPage(parseInt(res.data.totalPage)*5)
+        let q=location.search.slice(3)
+        let obj={}
+        if(q){
+            obj.q=q
+        }
+        axios.get(getArticlesUrl(obj)).then((res)=>{
+            let list=res.data.data
+            list.forEach(item => {
+                let index = item.content.indexOf('<!--more-->')
+                if(index===-1){
+                    index=Math.min(item.content.length,100)
+                }
+                item.description = translateMarkdown(item.content.slice(0, index))
+              })
+            setList(list)
+            saveList(list)
+            setLoading(true)
+            setTotalPage(parseInt(res.data.totalPage)*10)
         })
-    },[])
+    },[location.search])
+
     return <div className="main-container">
-                <List
+                {loading?(
+                    <Fragment>
+                    <List
                     itemLayout="vertical"
                     size="large"
                     pagination={{
                     onChange: async page => {
                         axios.get(getArticlesUrl({page})).then((res)=>{
                             setList(res.data.data)
-                            setTotalPage(parseInt(res.data.totalPage)*5)
+                            saveList(res.data.data)
+                            setTotalPage(parseInt(res.data.totalPage)*10)
                         })
                     },
                     total:totalPage ,
-                    pageSize: 5,
+                    pageSize: 10,
                     }}
                     dataSource={list}
                     footer={
@@ -42,30 +69,39 @@ const Main = memo(()=>{
                         className="ls-item"
                         key={item._id}
                         actions={[
-                        <IconText type="star-o" text="156" />,
                         <IconText type="like-o" text="156" />,
-                        <IconText type="message" text="2" />,
-                        <IconTag type="tag" text={item.tags} useIdexKey={true} />
+                        <IconTag  type="tag" text={item.tags} useIdexKey={true} />
                         ]}
-                        extra={
-                        <img
-                            width={272}
-                            alt="logo"
-                            src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                        />
-                        }
+                        // extra={
+                        // <img
+                        //     width={272}
+                        //     alt="logo"
+                        //     src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                        // />
+                        // }
                          >
                         <Divider orientation="left">
                             <span className="title">{item.title}</span>
                             <span className="time">{moment(item.createAt).format("YYYY-MM-DD")}</span>
                         </Divider>
-                        {item.content}
+                        <div dangerouslySetInnerHTML={{__html:item.description}} />
                          </List.Item>
                         </Link>
                     )}
                 />
-                <Preview/>
+                {width>738 && <Preview/>})
+                </Fragment>):<LoadingAct/>}
+                
                 
     </div>
-})
-export default Main
+}
+export default connect(
+    (state)=>({width:state.model.width}),(dispatch)=>({
+        saveList(list){
+            dispatch(saveHomeList(list))
+        }
+    })
+)
+(withRouter(memo(Main,(prevProps, nextProps) =>
+   prevProps.location.search === nextProps.location.search 
+)))
