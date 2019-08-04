@@ -25,7 +25,7 @@ class App extends Component {
     }
   }
   componentWillMount(){
-  const {setUserInfo,setAuthorization,setWidth}=this.props
+  const {setUserInfo,setAuthorization}=this.props
     let token=localStorage.token
     if(token){
        let user=jwt_decode(token)
@@ -33,7 +33,16 @@ class App extends Component {
        console.log(user,"用户")
        setUserInfo(user)
     }
-    setWidth(document.documentElement.clientWidth)
+    //先设置一遍width
+    this.listenresize()
+    window.addEventListener('resize',this.listenresize)
+    
+  }
+  componentWillUnmount(){
+    window.removeEventListener("resize",this.listenresize);
+  }
+  listenresize=()=>{
+    this.props.setWidth(document.documentElement.clientWidth)
   }
   render(){
     return (

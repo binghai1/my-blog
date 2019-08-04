@@ -45,7 +45,7 @@ class Article extends PureComponent{
                 <div>
                     <IconText type="code" text=" Posted on"/>
                     <Divider type="verticle"/>
-                    <IconTag more="a" type="tag" text={listItem.tags||[]}/>
+                    <IconTag more="a" type="tag" useIdexKey={listItem._id} text={listItem.tags||[]}/>
                 </div>
             </div>
             <Divider />

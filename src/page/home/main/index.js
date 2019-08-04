@@ -42,7 +42,6 @@ const Main = ({location,saveList,width})=>{
 
     return <div className="main-container">
                 {loading?(
-                    <Fragment>
                     <List
                     itemLayout="vertical"
                     size="large"
@@ -88,20 +87,20 @@ const Main = ({location,saveList,width})=>{
                          </List.Item>
                         </Link>
                     )}
-                />
-                {width>738 && <Preview/>})
-                </Fragment>):<LoadingAct/>}
+                >
+                {width > 738 && <Preview/>}
+                </List>):<LoadingAct/>}
                 
                 
     </div>
 }
-export default connect(
+export default memo(connect(
     (state)=>({width:state.model.width}),(dispatch)=>({
         saveList(list){
             dispatch(saveHomeList(list))
         }
     })
 )
-(withRouter(memo(Main,(prevProps, nextProps) =>
-   prevProps.location.search === nextProps.location.search 
+(withRouter(Main,(prevProps, nextProps) =>
+    (prevProps.location.search === nextProps.location.search)&&(prevProps.location.width == nextProps.location.width)
 )))
