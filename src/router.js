@@ -1,18 +1,21 @@
 import React,{Component} from 'react';
 import App from './App';
 import {BrowserRouter,Route,Switch} from 'react-router-dom'
-import  Home from './page/home'
-import  Article from './page/article'
-import  Main from './page/home/main'
-import  Other from './page/other'
-import Admin from './page/admin'
-import Edit from './page/admin/edit'
-import Manage from './page/admin/manage'
-import NotFound from './page/404'
-import TagsList from './page/tagsList'
-import TimeList from './page/timeList'
-import UserMange from './page/admin/userManage'
-import Category from './page/category'
+import {asyncComponent} from './util'
+const Home =asyncComponent(()=>import('./page/home'))
+const Article =asyncComponent(()=>import('./page/article'))
+const Main =asyncComponent(()=>import('./page/home/main'))
+const Other =asyncComponent(()=>import('./page/other'))
+const Admin =asyncComponent(()=>import('./page/admin'))
+const Edit =asyncComponent(()=>import('./page/admin/edit'))
+const NotFound =asyncComponent(()=>import('./page/404'))
+const TagsList =asyncComponent(()=>import( './page/timeList'))
+const Manage =asyncComponent(()=>import('./page/admin/manage'))
+const TimeList =asyncComponent(()=>import('./page/home/main'))
+const UserMange =asyncComponent(()=>import( './page/admin/userManage'))
+const Category =asyncComponent(()=>import('./page/category'))
+
+
 class MainRouter extends Component{
     render(){
         return <BrowserRouter >

@@ -1,7 +1,7 @@
 
 const config={}
 if(process.env.NODE_ENV=='production'){
-    // config.mongodHost="host"
+    config.mongodHost="mongodb://148.70.186.210/my-blog"
 }else{
     config.mongodHost="mongodb://localhost/my-blog"
 }
