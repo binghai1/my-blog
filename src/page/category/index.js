@@ -18,7 +18,7 @@ class Category extends Component{
         <Divider>标签分类</Divider>
         <div className="tag-group">
             {
-                (tags&&tags.length>0).map((item,index)=>(
+                (tags&&tags.length>0)&&tags.map((item,index)=>(
                     <Badge key={item._id} count={item.articlesCount||0}>
                     <Tag onClick={()=>this.onClick({id:item._id,name:item.title})} key={item._id} color={colorList[index%7]}>{item.title}</Tag>
                     </Badge>)
