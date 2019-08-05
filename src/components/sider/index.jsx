@@ -42,7 +42,7 @@ class Sider extends PureComponent {
             <Divider orientation="left">标签</Divider>
             <div className="tag-group">
                 {
-                    tags.map((item,index)=>(
+                    (tags&&tags.length>0)&&tags.map((item,index)=>(
                         <Badge key={item._id} count={item.articlesCount||0}>
                         <Tag onClick={()=>this.onClick({id:item._id,name:item.title})} key={item._id} color={colorList[index%7]}>{item.title}</Tag>
                         </Badge>)

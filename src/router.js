@@ -2,9 +2,10 @@ import React,{Component} from 'react';
 import App from './App';
 import {BrowserRouter,Route,Switch} from 'react-router-dom'
 import {asyncComponent} from './util'
-const Home =asyncComponent(()=>import('./page/home'))
+import Home from ('./page/home')
 const Article =asyncComponent(()=>import('./page/article'))
-const Main =asyncComponent(()=>import('./page/home/main'))
+import Main from ('./page/home/main')
+// const Main =asyncComponent(()=>import('./page/home/main'))
 const Other =asyncComponent(()=>import('./page/other'))
 const Admin =asyncComponent(()=>import('./page/admin'))
 const Edit =asyncComponent(()=>import('./page/admin/edit'))

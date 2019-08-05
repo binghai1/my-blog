@@ -1,6 +1,6 @@
 
 const User = require('../models/users')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {secret} =require('../config')
 const SuccessModel = require('../util/succesModel')

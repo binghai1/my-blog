@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "start": "node bin/www",
-    "dev": "./node_modules/.bin/nodemon bin/www",
-    "prd": "cross-env NODE_ENV=production pm2 start bin/www",
+    "dev": "cross-env NODE_ENV=development ./node_modules/.bin/nodemon bin/www",
+    "prd": " pm2 start bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cross-env": "^5.2.0",
     "debug": "^2.6.3",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.2.0",
@@ -28,7 +29,6 @@
     "pug": "^2.0.0-rc.1"
   },
   "devDependencies": {
-    "cross-env": "^5.2.0",
     "nodemon": "^1.8.1"
   }
 }
