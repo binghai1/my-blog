@@ -30,7 +30,6 @@ class App extends Component {
     if(token){
        let user=jwt_decode(token)
        setAuthorization(user)
-       console.log(user,"用户")
        setUserInfo(user)
     }
     //先设置一遍width

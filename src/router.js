@@ -3,11 +3,13 @@ import App from './App';
 import {BrowserRouter,Route,Switch} from 'react-router-dom'
 import {asyncComponent} from './util'
 import Home from './page/home'
-import Main from './page/home/main'
-// const Main =asyncComponent(()=>import('./page/home/main'))
+// import Main from './page/home/main'
+import Admin from './page/admin'
+
+const Main =asyncComponent(()=>import('./page/home/main'))
 const Article =asyncComponent(()=>import('./page/article'))
 const Other =asyncComponent(()=>import('./page/other'))
-const Admin =asyncComponent(()=>import('./page/admin'))
+// const Admin =asyncComponent(()=>import('./page/admin'))
 const Edit =asyncComponent(()=>import('./page/admin/edit'))
 const NotFound =asyncComponent(()=>import('./page/404'))
 const TagsList =asyncComponent(()=>import( './page/timeList'))

@@ -1,5 +1,9 @@
 const { override, fixBabelImports, addLessLoader,addWebpackAlias,addDecoratorsLegacy } = require('customize-cra');
 const path = require('path')
+const addCustom=()=> config=>{
+  
+  return config
+}
 module.exports = override(
   fixBabelImports('import', {
     libraryName: 'antd',

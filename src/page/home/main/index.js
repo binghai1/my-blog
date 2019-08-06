@@ -26,7 +26,7 @@ const Main = ({location,saveList,width})=>{
         }
         axios.get(getArticlesUrl(obj)).then((res)=>{
             let list=res.data.data
-            list.forEach(item => {
+            list&&list.forEach(item => {
                 let index = item.content.indexOf('<!--more-->')
                 if(index===-1){
                     index=Math.min(item.content.length,100)
