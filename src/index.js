@@ -4,7 +4,7 @@ import MainRouter from './router'
 import * as serviceWorker from './serviceWorker';
 import {Provider}  from  'react-redux'
 import store from './store'
-import {axiousInsterors} from './util'
+import axiousInsterors from './util/axiousInsterors'
 // import './index.less';
     
 //markdown额外样式
