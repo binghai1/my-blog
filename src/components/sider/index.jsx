@@ -24,7 +24,7 @@ class Sider extends PureComponent {
         return <div className='sider-wrapper'>
             <AuthorAvatar  width={133} height={133}/>
             {/* <h2>海</h2> */}
-            <p style={{marginTop:"20px"}}>前端打砸人员,略微代码洁癖</p>
+            <p style={{marginTop:20}}>前端打砸人员,略微代码洁癖</p>
             <ul className="social">
                 <li>
                     <Icon type="github"></Icon>

@@ -3,25 +3,23 @@ import App from './App';
 import {BrowserRouter,Route,Switch} from 'react-router-dom'
 import {asyncComponent} from './util'
 import Home from './page/home'
-// import Main from './page/home/main'
-import Admin from './page/admin'
 
 const Main =asyncComponent(()=>import('./page/home/main'))
 const Article =asyncComponent(()=>import('./page/article'))
-const Other =asyncComponent(()=>import('./page/other'))
-// const Admin =asyncComponent(()=>import('./page/admin'))
+// const Other =asyncComponent(()=>import('./page/other'))
+const Admin =asyncComponent(()=>import('./page/admin'))
 const Edit =asyncComponent(()=>import('./page/admin/edit'))
 const NotFound =asyncComponent(()=>import('./page/404'))
-const TagsList =asyncComponent(()=>import( './page/timeList'))
+const TagsList =asyncComponent(()=>import( './page/tagsList'))
 const Manage =asyncComponent(()=>import('./page/admin/manage'))
-const TimeList =asyncComponent(()=>import('./page/home/main'))
+const TimeList =asyncComponent(()=>import('./page/timeList'))
 const UserMange =asyncComponent(()=>import( './page/admin/userManage'))
 const Category =asyncComponent(()=>import('./page/category'))
 
 
 class MainRouter extends Component{
     render(){
-        return <BrowserRouter >
+        return <BrowserRouter  >
             <App>
                 <Switch>
                     <Route path='/admin' render={()=>(
@@ -39,7 +37,7 @@ class MainRouter extends Component{
                                 <Route path='/' exact  component={Main}/>
                                 <Route   path='/time' component={TimeList}/>
                                 <Route   path='/category' component={Category}/>
-                                <Route   path='/other' component={Other}/>
+                                {/* <Route   path='/other' component={Other}/> */}
                                 <Route   path='/article/:id' component={Article}/>
                                 <Route   path='/tags/:id/:name' component={TagsList}/>
                                   <Route  path='/*' component={NotFound} />

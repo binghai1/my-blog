@@ -48,7 +48,7 @@ class CommentsController{
     }
     async removeAll(ctx){
         const {id}=ctx.params
-        let flag=await Comments.findOneAndDelete({rootCommentId:id})
+        let flag=await Comments.findOneAndRemove({rootCommentId:id})
         let data=await Comments.findByIdAndRemove(id)
         if(!data) ctx.throw(404,"删除评论失败")
         ctx.body=SuccessModel(data)

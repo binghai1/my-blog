@@ -2,7 +2,7 @@ import React,{PureComponent} from 'react';
 import {Button,Divider,} from 'antd'
 import {withRouter} from 'react-router-dom'
 import {IconText,IconTag} from '@/components/iconEnhance'
-import ArticleComment from './comment/index'
+import ArticleComment from './comment'
 import './index.less'
 import {findArticlesByIdUrl,findCommentsURl} from "@/util/interfaces"
 import axios from 'axios'
@@ -49,7 +49,7 @@ class Article extends PureComponent{
                 </div>
             </div>
             <Divider />
-            <div dangerouslySetInnerHTML = {{ __html: listItem.content }} />
+            <div className="article-main" dangerouslySetInnerHTML = {{ __html: listItem.content }} />
             {width<738 && <Button onClick={this.onClick}
             style={{ position:"fixed",top: "104px",right:"10px",zIndex:11 }}
             shape="circle"   icon="minus-square"    />

@@ -90,13 +90,13 @@ handleRegister=(e)=>{
             valuePropName: 'checked',
             initialValue: true,
           })(<Checkbox>Remember me</Checkbox>)}
-          <a className="login-form-forgot" href="javascript;" onClick={this.handleForgot}>
+          <a className="login-form-forgot" href="javascript:;" onClick={this.handleForgot}>
             Forgot password
           </a>
           <Button loading={confirmLoading} type="primary" htmlType="submit" className="login-form-button">
             Log in
           </Button>
-          Or <a href="javascript;"  onClick={this.handleRegister} style={{color:'#1890ff'}}>register now!</a>
+          Or <a href="javascript:;"  onClick={this.handleRegister} style={{color:'#1890ff'}}>register now!</a>
         </Form.Item>
       </Form>
         </Modal>

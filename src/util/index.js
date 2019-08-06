@@ -1,10 +1,18 @@
+import React from 'react'
 import xss from 'xss'
 import marked from 'marked'
-import hljs from 'highlight.js'
-import 'highlight.js/styles/github.css'
+
+//仅倒入js语言
+import hljs from 'highlight.js/lib/highlight';
+import "../assets/markdown.less";
+import javascript from 'highlight.js/lib/languages/javascript';
 import axios from 'axios'
+import 'highlight.js/styles/atom-one-dark-reasonable.css'
 import {message} from 'antd'
-import React from 'react'
+
+
+
+hljs.registerLanguage('javascript', javascript);
 export const translateMarkdown = (plainText, isGuardXss = false) => {
     return marked(isGuardXss ? xss(plainText) : plainText, {
       renderer: new marked.Renderer(),

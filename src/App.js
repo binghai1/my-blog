@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import './App.css';
 import {withRouter} from 'react-router-dom'
 import * as actionCreators from '@/store/actionCreators'
 import {connect} from 'react-redux'

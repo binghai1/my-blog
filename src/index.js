@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.less';
 import MainRouter from './router'
 import * as serviceWorker from './serviceWorker';
 import {Provider}  from  'react-redux'
 import store from './store'
 import axios from 'axios'
+import './index.less';
 import {axiousInsterors} from './util'
+
+
+//markdown额外样式
+
 ReactDOM.render(<Provider store={store}><MainRouter /></Provider>, document.getElementById('root'));
 
 axiousInsterors()

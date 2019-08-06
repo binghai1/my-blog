@@ -31,9 +31,9 @@ const Head=(props)=>{
             case "2" : {
                 localStorage.removeItem('token')
                 setAuthorization(false)
-                history.push("/")
+                window.location.href="/"
             }break;
-            default :;
+            default :; 
         }
     }
     const renderAvatarDropdownMenu=(
@@ -55,12 +55,10 @@ const Head=(props)=>{
                 </div>
             {width<738&&<span className="phone-title" ><i className="iconfont iconkeai" />海的博客</span>}
 
-           {
-               authorized?(
+           {authorized?(
                 <div className="user-avatar" >
                
-                {
-                    role==="管理员"?
+                {role==="管理员"?
                 <Dropdown placement="bottomCenter" overlay={renderAvatarDropdownMenu} trigger={['click', 'hover']}>
                    <AuthorAvatar className="user-avatar" size="large"/>
                 </Dropdown>
