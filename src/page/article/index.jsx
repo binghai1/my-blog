@@ -2,7 +2,7 @@ import React,{PureComponent} from 'react';
 import {Button,Divider,} from 'antd'
 import {withRouter} from 'react-router-dom'
 import {IconText,IconTag} from '@/components/iconEnhance'
-import ArticleComment from './comment'
+import ArticleComment from './comment/index'
 import './index.less'
 import {findArticlesByIdUrl,findCommentsURl} from "@/util/interfaces"
 import axios from 'axios'

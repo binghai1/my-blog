@@ -1,17 +1,11 @@
 import React from 'react'
 import xss from 'xss'
 import marked from 'marked'
-
 //仅倒入js语言
 import hljs from 'highlight.js/lib/highlight';
 import "../assets/markdown.less";
 import javascript from 'highlight.js/lib/languages/javascript';
-import axios from 'axios'
 import 'highlight.js/styles/atom-one-dark-reasonable.css'
-import {message} from 'antd'
-
-
-
 hljs.registerLanguage('javascript', javascript);
 export const translateMarkdown = (plainText, isGuardXss = false) => {
     return marked(isGuardXss ? xss(plainText) : plainText, {
@@ -28,35 +22,7 @@ export const translateMarkdown = (plainText, isGuardXss = false) => {
       }
     })
   }
-export const axiousInsterors=()=>{
-    axios.interceptors.request.use(config=>{
-      // ReactDOM.render(<Spin/>,document.getElementById("loading-wrapper"))
-      if(localStorage.token){
-        config.headers.Authorization="Bearer "+localStorage.token
-      }
-      return config
-    },error=>{
-      console.error(error)
-    })
-    axios.interceptors.response.use(config=>{
-      return config
-    },error=>{
-      let tip="";
-      switch(error.response.status){
-        case 404 : tip="服务器异常，请稍后再试"; break;
-        case 403 : tip="您没有权限"; break;
-        case 401 : {
-          localStorage.token&&localStorage.removeItem("token")
-          window.location.href="/"
-          tip="登陆验证过时，请重新登陆";
-        } break;
-        case 422 : tip="参数错误"; break;
-        default : tip="未知错误"
-      }
-      message.warning(tip)
-      return Promise.resolve(error.response);
-    })
-}
+
 //排序
 export const groupBy = (arr, f) => {
   const groups = {}
