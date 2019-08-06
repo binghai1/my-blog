@@ -24,7 +24,7 @@ class Cate extends PureComponent {
     return (
       <Fragment>
         <h6 style={{ marginRight: 8, display: 'inline' }}>Tags:</h6>
-        {tags.map(tag => (
+        {tags&&tags.map(tag => (
           <CheckableTag
             key={tag._id}
             checked={  selectTags.indexOf(tag._id) > -1}

@@ -1,7 +1,9 @@
 import xss from 'xss'
 import marked from 'marked'
 import hljs from 'highlight.js'
-import 'highlight.js/styles/github.css'
+
+import 'highlight.js/styles/atom-one-dark-reasonable.css'
+// import 'highlight.js/styles/github.css'
 import axios from 'axios'
 import {message} from 'antd'
 import React from 'react'
