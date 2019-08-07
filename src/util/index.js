@@ -4,7 +4,7 @@ import marked from 'marked'
 import hljs from 'highlight.js/lib/highlight';
 import "../assets/markdown.less";
 import javascript from 'highlight.js/lib/languages/javascript';
-import 'highlight.js/styles/atom-one-dark-reasonable.css'
+import 'highlight.js/styles/atom-one-light.css'
 hljs.registerLanguage('javascript', javascript);
 
 export const translateMarkdown = (plainText, isGuardXss = false) => {

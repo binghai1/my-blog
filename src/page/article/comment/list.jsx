@@ -97,12 +97,12 @@ class CommentList extends Component {
   }
 
   renderAvatar = item => {
-    if (this.props.role==="管理员") {
+    if (item.commentor.role==="管理员") {
       return <AuthorAvatar size="default" />
     } else {
       return (
         <Avatar className="user-avatar" size="default" style={{ backgroundColor:   '#ffbf00' }}>
-          {item.user && item.user.username}
+          {item.commentor && item.commentor.username}
         </Avatar>
       )
     }

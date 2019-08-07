@@ -12,9 +12,11 @@ class CommentsController{
         })
         const {content,rootCommentId,replyTo,articleId}=ctx.request.body
         const commentor=ctx.state.user._id
-        let data=await new Comments({
+        let res=await new Comments({
             commentor,rootCommentId,replyTo,content,articleId
         }).save()
+        if(!res) ctx.trhow(404,"创建评论失败")
+        let data=await Comments.findById(res._id).populate('commentor')
         if(!data) ctx.trhow(404,"创建评论失败")
         ctx.body=SuccessModel(data)
     }

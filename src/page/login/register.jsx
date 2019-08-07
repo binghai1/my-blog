@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './index.less'
 import {getRegisterModel,getModel}from '@/store/actionCreators'
 import {registerUrl} from '@/util/interfaces'
+import axios from 'axios'
 @connect((state)=>({visible:state.model.showRegister}),
 (dispatch)=>({
     showModal(flag){
@@ -46,7 +47,7 @@ class Register extends Component {
         this.setState({
             confirmLoading: true,
           });
-            let res=await this.$axios.post(registerUrl,values)
+            let res=await axios.post(registerUrl,values)
             this.setState({
               confirmLoading: false,
             });
