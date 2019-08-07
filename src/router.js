@@ -9,13 +9,16 @@ import  Edit from  './page/admin/edit'
 import  Manage from  './page/admin/manage'
 import  UserMange from  './page/admin/userManage'
 import  Article from  './page/article'
+import Admin from './page/admin'
+import UserMange from './page/admin/userManage'
+import Article from './page/article'
 const Main =asyncComponent(()=>import('./page/home/main'))
 
 const Manage =asyncComponent(()=>import('./page/admin/manage'))
 
-const Article =asyncComponent(()=>import('./page/article'))
+// const Article =asyncComponent(()=>import('./page/article'))
 
-const Admin =asyncComponent(()=>import('./page/admin'))
+// const Admin =asyncComponent(()=>import('./page/admin'))
 // const Edit =asyncComponent(()=>import('./page/admin/edit'))
 
 const NotFound =asyncComponent(()=>import('./page/404'))
