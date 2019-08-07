@@ -12,6 +12,7 @@ import  Article from  './page/article'
 import Admin from './page/admin'
 import UserMange from './page/admin/userManage'
 import Article from './page/article'
+import Category from './page/category'
 const Main =asyncComponent(()=>import('./page/home/main'))
 
 const Manage =asyncComponent(()=>import('./page/admin/manage'))
@@ -22,11 +23,12 @@ const Manage =asyncComponent(()=>import('./page/admin/manage'))
 // const Edit =asyncComponent(()=>import('./page/admin/edit'))
 
 const NotFound =asyncComponent(()=>import('./page/404'))
+
 const TagsList =asyncComponent(()=>import( './page/tagsList'))
 // const Manage =asyncComponent(()=>import('./page/admin/manage'))
 const TimeList =asyncComponent(()=>import('./page/timeList'))
-const UserMange =asyncComponent(()=>import( './page/admin/userManage'))
-const Category =asyncComponent(()=>import('./page/category'))
+// const UserMange =asyncComponent(()=>import( './page/admin/userManage'))
+// const Category =asyncComponent(()=>import('./page/category'))
 
 
 class MainRouter extends Component{
