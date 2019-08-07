@@ -8,7 +8,6 @@ import  Edit from  './page/admin/edit'
 
 import  Manage from  './page/admin/manage'
 import  UserMange from  './page/admin/userManage'
-import  Article from  './page/article'
 import Admin from './page/admin'
 import Article from './page/article'
 const Main =asyncComponent(()=>import('./page/home/main'))
