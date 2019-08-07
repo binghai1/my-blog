@@ -10,6 +10,7 @@ import  Manage from  './page/admin/manage'
 import  UserMange from  './page/admin/userManage'
 import Admin from './page/admin'
 import Article from './page/article'
+import TagsList from  './page/tagsList'
 const Main =asyncComponent(()=>import('./page/home/main'))
 
 // const Manage =asyncComponent(()=>import('./page/admin/manage'))
@@ -21,7 +22,7 @@ const Main =asyncComponent(()=>import('./page/home/main'))
 
 const NotFound =asyncComponent(()=>import('./page/404'))
 
-const TagsList =asyncComponent(()=>import( './page/tagsList'))
+// const TagsList =asyncComponent(()=>import( './page/tagsList'))
 // const Manage =asyncComponent(()=>import('./page/admin/manage'))
 const TimeList =asyncComponent(()=>import('./page/timeList'))
 // const UserMange =asyncComponent(()=>import( './page/admin/userManage'))
