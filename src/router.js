@@ -15,7 +15,7 @@ import Article from './page/article'
 import Category from './page/category'
 const Main =asyncComponent(()=>import('./page/home/main'))
 
-const Manage =asyncComponent(()=>import('./page/admin/manage'))
+// const Manage =asyncComponent(()=>import('./page/admin/manage'))
 
 // const Article =asyncComponent(()=>import('./page/article'))
 
